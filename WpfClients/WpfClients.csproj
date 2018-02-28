@@ -34,8 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapfor.Wpf, Version=4.1.0.26317, Culture=neutral, PublicKeyToken=dab4ac5e28bf033b, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,6 +83,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -92,6 +95,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\addnew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\deleteall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\filterremove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
