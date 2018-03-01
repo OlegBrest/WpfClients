@@ -41,14 +41,14 @@
             <MenuItem x:Name="menu_help" Header="Помощь"/>
             <MenuItem x:Name="menu_advanced" Header="Дополнительно"/>
         </Menu>
-        <StackPanel x:Name="stackPanel" Margin="0,30,0,0">
-            <TabControl  Margin="0,0,0,0" Width="{Binding ActualWidth, ElementName=dockPanel, Mode=OneWay}">
+        <DockPanel x:Name="client_dockPanel" Margin="0,30,0,0" AutomationProperties.Name="client_dockPanel">
+            <TabControl  Margin="0,0,0,0">
                 <TabControl.Background>
                     <ImageBrush/>
                 </TabControl.Background>
-                <TabItem Header="Клиенты">
-                    <StackPanel x:Name="client_stackPanel"  Margin="0" Height="32">
-                        <Menu Margin="0,0,0,0" Height="29" VerticalAlignment="Center">
+                <TabItem Header="Клиенты" Margin="0,0,0,0">
+                    <StackPanel x:Name="client_stackPanel"  Margin="0,0,0,0">
+                        <Menu Margin="0,0,0,0" Height="29" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                             <Button x:Name="client_add_new" ToolTip="Добавить новую запись" Height="15" Width="15">
                                 <Button.Background>
                                     <ImageBrush ImageSource="res/addnew.png" Stretch="UniformToFill">
@@ -121,6 +121,7 @@
                             <Button x:Name="client_next_row" ToolTip="Следующая запись" Width="15" Height="15"/>
                             <Button x:Name="client_last_row" ToolTip="Последняя запись" Width="15" Height="15"/>
                         </Menu>
+                        <DataGrid x:Name="dataGrid"  RenderTransformOrigin="0.5,0.5" AutomationProperties.Name="dataGrid"/>
                     </StackPanel>
 
                 </TabItem>
@@ -133,12 +134,9 @@
                 <TabItem Header="Платежи"/>
                 <TabItem Header="Продавцы"/>
                 <TabItem Header="Сотрудники"/>
-
-
-
             </TabControl>
-            <DataGrid x:Name="dataGrid"  RenderTransformOrigin="0.5,0.5" Height="601" AutomationProperties.Name="dataGrid"/>
-        </StackPanel>
+
+        </DockPanel>
 
 
 
