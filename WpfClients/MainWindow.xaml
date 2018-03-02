@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClients"
-        xmlns:Controls="clr-namespace:Dapfor.Wpf.Controls;assembly=Dapfor.Wpf" xmlns:Converters="clr-namespace:Dapfor.Wpf.Converters;assembly=Dapfor.Wpf" x:Class="WpfClients.MainWindow"
+        xmlns:Controls="clr-namespace:Dapfor.Wpf.Controls;assembly=Dapfor.Wpf" xmlns:Converters="clr-namespace:Dapfor.Wpf.Converters;assembly=Dapfor.Wpf" x:Name="MainWindow1" x:Class="WpfClients.MainWindow"
         mc:Ignorable="d"
         Title="Заказы и клиенты" Height="800" Width="1100" MinWidth="1100">
     <Window.Resources>
@@ -35,14 +35,9 @@
                 <MenuItem Header="Свернуть в трей"/>
                 <MenuItem Header="Выход"/>
             </MenuItem>
-            <MenuItem x:Name="menu_tables" Header="Таблицы"/>
-            <MenuItem x:Name="menu_reports" Header="Отчёты"/>
-            <MenuItem x:Name="menu_services" Header="Сервис"/>
-            <MenuItem x:Name="menu_help" Header="Помощь"/>
-            <MenuItem x:Name="menu_advanced" Header="Дополнительно"/>
         </Menu>
         <DockPanel x:Name="client_dockPanel" Margin="0,30,0,0" AutomationProperties.Name="client_dockPanel">
-            <TabControl  Margin="0,0,0,0">
+            <TabControl x:Name="mainTab"  Margin="0,0,0,0" AutomationProperties.Name="mainTab">
                 <TabControl.Background>
                     <ImageBrush/>
                 </TabControl.Background>
@@ -121,7 +116,7 @@
                             <Button x:Name="client_next_row" ToolTip="Следующая запись" Width="15" Height="15"/>
                             <Button x:Name="client_last_row" ToolTip="Последняя запись" Width="15" Height="15"/>
                         </Menu>
-                        <DataGrid x:Name="dataGrid"  RenderTransformOrigin="0.5,0.5" AutomationProperties.Name="dataGrid"/>
+                        <DataGrid x:Name="dataGrid"  RenderTransformOrigin="0.5,0.5" AutomationProperties.Name="dataGrid" EnableRowVirtualization="False"/>
                     </StackPanel>
 
                 </TabItem>
