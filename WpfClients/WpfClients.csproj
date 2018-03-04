@@ -111,7 +111,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -122,33 +122,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\addnew.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\deleteall.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\edit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\filter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\filterremove.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="res\refresh.png" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

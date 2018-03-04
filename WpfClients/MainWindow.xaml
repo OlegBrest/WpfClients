@@ -6,134 +6,18 @@
         xmlns:local="clr-namespace:WpfClients"
         xmlns:Controls="clr-namespace:Dapfor.Wpf.Controls;assembly=Dapfor.Wpf" xmlns:Converters="clr-namespace:Dapfor.Wpf.Converters;assembly=Dapfor.Wpf" x:Name="MainWindow1" x:Class="WpfClients.MainWindow"
         mc:Ignorable="d"
-        Title="Заказы и клиенты" Height="800" Width="1100" MinWidth="1100">
+        Title="Заказы и клиенты" Height="800" Width="1100" MinWidth="1100" MinHeight="800">
     <Window.Resources>
         <Converters:StringConverter x:Key="StringConverter"/>
     </Window.Resources>
     <Grid>
-        <Menu x:Name="Main_menu" Height="25" VerticalAlignment="Top">
-            <MenuItem x:Name="menu_file" Header="Файл">
-                <MenuItem Header="Создать базу данных..."/>
-                <MenuItem Header="Открыть базу данных..."/>
-                <MenuItem Header="Очистить базу данных..."/>
-                <Separator/>
-                <MenuItem Header="Создать резервную копию..."/>
-                <MenuItem Header="Восстановить резервную копию..."/>
-                <MenuItem Header="Сжать текущую базу данных..."/>
-                <Separator/>
-                <MenuItem Header="Импорт..."/>
-                <MenuItem Header="Импорт из XML..."/>
-                <MenuItem Header="Экспорт в XML..."/>
-                <Separator/>
-                <MenuItem Header="Создать реплику"/>
-                <MenuItem Header="Синхронизация..."/>
-                <Separator/>
-                <MenuItem Header="Свойства базы данных..."/>
-                <Separator/>
-                <MenuItem Header="Новый экземпляр программы"/>
-                <MenuItem Header="Смена пользователя..."/>
-                <MenuItem Header="Свернуть в трей"/>
-                <MenuItem Header="Выход"/>
-            </MenuItem>
-        </Menu>
+        <Menu x:Name="Main_menu" Height="25" VerticalAlignment="Top"/>
         <DockPanel x:Name="client_dockPanel" Margin="0,30,0,0" AutomationProperties.Name="client_dockPanel">
-            <TabControl x:Name="mainTab"  Margin="0,0,0,0" AutomationProperties.Name="mainTab">
+            <TabControl  x:Name="mainTab"  Margin="0,0,0,0" AutomationProperties.Name="mainTab">
                 <TabControl.Background>
                     <ImageBrush/>
                 </TabControl.Background>
-                <TabItem Header="Клиенты" Margin="0,0,0,0">
-                    <StackPanel x:Name="client_stackPanel"  Margin="0,0,0,0">
-                        <Menu Margin="0,0,0,0" Height="29" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
-                            <Button x:Name="client_add_new" ToolTip="Добавить новую запись" Height="15" Width="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/addnew.png" Stretch="UniformToFill">
-                                        <ImageBrush.RelativeTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform CenterY="0.5" CenterX="10"/>
-                                                <SkewTransform CenterY="0.5" CenterX="10"/>
-                                                <RotateTransform CenterY="0.5" CenterX="10"/>
-                                                <TranslateTransform/>
-                                            </TransformGroup>
-                                        </ImageBrush.RelativeTransform>
-                                    </ImageBrush>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="client_edit" ToolTip="Изменить" Width="15" Height="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/edit.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="client_copy" ToolTip="Дублировать" Width="15" Height="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/copy.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="client_delete" ToolTip="Удалить"  Width="15" Height="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/delete.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="client_delete_all" ToolTip="Удалить всё"  Width="15" Height="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/deleteall.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="client_update" ToolTip="Обновить (F5)"  Width="15" Height="15">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="res/refresh.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_add_filter" Cursor="None" ToolTip="Добавить фильтр"  Width="15" Height="15"/>
-                            <Button x:Name="client_remove_filter" ToolTip="Удалить фильтр"  Width="15" Height="15"/>
-                            <Button x:Name="client_remove_all_filters" ToolTip="Удалить все фильтры"  Width="15" Height="15"/>
-                            <Button x:Name="client_enable_all_filters" ToolTip="Включить все фильтры"  Width="15" Height="15"/>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_show_filters" ToolTip="Показывать фильтры"  Width="15" Height="15"/>
-                            <Button x:Name="client_show_tree" ToolTip="Показывать дерево"  Width="15" Height="15"/>
-                            <Button x:Name="client_sql_query" ToolTip="SQL запрос (F11)"  Width="15" Height="15"/>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_find" ToolTip="Найти"  Width="15" Height="15"/>
-                            <Button x:Name="client_print" ToolTip="Печатать"  Width="15" Height="15"/>
-                            <Button x:Name="client_view" ToolTip="Предварительный просмотр"  Width="15" Height="15"/>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_new_word_doc" ToolTip="Новый документ Word по шаблону"  Width="15" Height="15"/>
-                            <Button x:Name="client_new_excel_doc" ToolTip="Новый документ Excel по шаблону"  Width="15" Height="15"/>
-                            <Button x:Name="client_export_word" ToolTip="Экспорт таблицы в Word"  Width="15" Height="15"/>
-                            <Button x:Name="client_export_excel" ToolTip="Экспорт таблицы в Excel"  Width="15" Height="15"/>
-                            <Button x:Name="client_export_rtf" ToolTip="Экспорт в RTF" Width="15" Height="15"/>
-                            <Button x:Name="client_export_CSV" ToolTip="Экспорт в CSV"  Width="15" Height="15"/>
-                            <Button x:Name="client_export_TXT" ToolTip="Экспорт в текстовый файл"  Width="15" Height="15"/>
-                            <Button x:Name="client_graph" ToolTip="График" Width="15" Height="15"/>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_add_field_in_table" ToolTip="Добавить поле в таблицу" Width="15" Height="15"/>
-                            <Button x:Name="client_ID_field_prop" ToolTip="Свойства поля ID" Width="15" Height="15"/>
-                            <Button x:Name="client_table_prop" ToolTip="Свойства таблицы"  Width="15" Height="15"/>
-                            <Button x:Name="client_fields_settings" ToolTip="Настройка полей" Width="15" Height="15"/>
-                            <Separator Width="5"/>
-                            <Button x:Name="client_first_row" ToolTip="Первая запись"  Width="15" Height="15"/>
-                            <Button x:Name="client_previos_row" ToolTip="Предыдущая запись" Width="15" Height="15"/>
-                            <Button x:Name="client_next_row" ToolTip="Следующая запись" Width="15" Height="15"/>
-                            <Button x:Name="client_last_row" ToolTip="Последняя запись" Width="15" Height="15"/>
-                        </Menu>
-                        <DataGrid x:Name="dataGrid"  RenderTransformOrigin="0.5,0.5" AutomationProperties.Name="dataGrid" EnableRowVirtualization="False"/>
-                    </StackPanel>
-
-                </TabItem>
-                <TabItem Header="Контакты"/>
-                <TabItem Header="События"/>
-                <TabItem Header="Заказы"/>
-                <TabItem Header="Сделки"/>
-                <TabItem Header="Договоры"/>
-                <TabItem Header="Коммерческое"/>
-                <TabItem Header="Платежи"/>
-                <TabItem Header="Продавцы"/>
-                <TabItem Header="Сотрудники"/>
             </TabControl>
-
         </DockPanel>
-
-
-
     </Grid>
 </Window>
