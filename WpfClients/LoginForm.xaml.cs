@@ -43,6 +43,11 @@ namespace WpfClients
 
         private void Bttn_enter_Click(object sender, RoutedEventArgs e)
         {
+            TryEnter();
+        }
+
+        private void TryEnter()
+        {
             bool can_enter = false;
             foreach (DataRow dr in this.users_dataTable.Rows)
             {
@@ -55,6 +60,7 @@ namespace WpfClients
             }
             if (can_enter)
             {
+                this.Hide();
                 MainWindow mw = new MainWindow(this.user_ID);
                 mw.Show();
                 this.Close();
@@ -64,6 +70,11 @@ namespace WpfClients
         private void Bttn_cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void txtbx_password_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter)) TryEnter();
         }
     }
 }

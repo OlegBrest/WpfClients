@@ -1,0 +1,14 @@
+﻿<Window x:Name="add_edit_wnd" x:Class="WpfClients.AddEdit_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfClients"
+        mc:Ignorable="d"
+        Title="AddEdit_window" Height="450" Width="800">
+    <Grid x:Name="main_grid">
+        <Button x:Name="ok_bttn" Content="Ok" Margin="0,0,143,8" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" Click="ok_bttn_Click"/>
+        <Button x:Name="Cancel_bttn" Content="Отмена" Margin="0,0,38,8" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="Cancel_bttn_Click"/>
+
+    </Grid>
+</Window>

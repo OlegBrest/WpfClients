@@ -12,6 +12,6 @@
         <Label Content="Пароль" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Bttn_enter" Content="Вход" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="75" Click="Bttn_enter_Click"/>
         <Button x:Name="Bttn_cancel" Content="Отмена" HorizontalAlignment="Left" Margin="120,134,0,0" VerticalAlignment="Top" Width="75" Click="Bttn_cancel_Click"/>
-        <PasswordBox x:Name="txtbx_password" Margin="9,100,17,0" VerticalAlignment="Top" AutomationProperties.Name="txtbx_password"/>
+        <PasswordBox x:Name="txtbx_password" Margin="9,100,17,0" VerticalAlignment="Top" AutomationProperties.Name="txtbx_password" Height="23" KeyUp="txtbx_password_KeyUp" TextOptions.TextHintingMode="Animated" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="Auto"/>
     </Grid>
 </Window>

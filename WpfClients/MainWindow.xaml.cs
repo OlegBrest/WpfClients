@@ -34,6 +34,7 @@ namespace WpfClients
         OleDbConnection vConn = new OleDbConnection(Properties.Settings.Default.ConnectString);
         OleDbDataAdapter vAdap = new OleDbDataAdapter();
         Dictionary<string, string> settings_dict;
+        Dictionary<string, FrameworkElement> ctrls_dic = new Dictionary<string, FrameworkElement>();
         public MainWindow(int i)
         {
             this.user_ID = i;
@@ -53,8 +54,8 @@ namespace WpfClients
             this.vAdap.Fill(this.vDs, "Captions");
             this.vConn.Close();
             DataTable dtCapt = this.vDs.Tables["Captions"];
-            settings_dict = new Dictionary<string, string>();
-            foreach (DataRow dr in dtCapt.Rows) settings_dict.Add(dr[0].ToString(), dr[1].ToString());
+            this.settings_dict = new Dictionary<string, string>();
+            foreach (DataRow dr in dtCapt.Rows) this.settings_dict.Add(dr[0].ToString(), dr[1].ToString());
 
 
             string Main_Menu_fullstring = this.vDs.Tables["User_Menu"].Rows[0]["SettingValue"].ToString();
@@ -73,6 +74,7 @@ namespace WpfClients
                     mi.IsEnabled = items_subitems[2] == "1" ? true : false;
                     mi.Header = items_subitems[3];
                     this.Main_menu.Items.Add(mi);
+                    this.ctrls_dic.Add(mi.Name, mi);
                     foreach (string subitem in Main_Menu_substring)
                     {
                         if ((subitem.Contains(main_item)) && (subitem.Contains("Items")))
@@ -80,11 +82,15 @@ namespace WpfClients
                             string[] subsub_item;
                             subsub_item = subitem.Split('|');
                             MenuItem msi = new MenuItem();
-                            msi.Name = main_item;
+                            msi.Name = subsub_item[0] + "_"+subsub_item[4];
                             msi.Visibility = subsub_item[1] == "1" ? Visibility.Visible : Visibility.Hidden;
                             msi.IsEnabled = subsub_item[2] == "1" ? true : false;
                             msi.Header = subsub_item[3];
-                            if (subsub_item[3] != "-") mi.Items.Add(msi);
+                            if (subsub_item[3] != "-")
+                            {
+                                mi.Items.Add(msi);
+                                this.ctrls_dic.Add(msi.Name, msi);
+                            }
                             else mi.Items.Add(new Separator());
                         }
                     }
@@ -121,11 +127,13 @@ namespace WpfClients
                     Ti.Name = Tabs;
                     DataGrid dg = new DataGrid();
                     dg.CanUserAddRows = false;
-                    dg.Name = "datagrid" + "_" + Tabs;
+                    dg.Name = "datagrid_" + Tabs;
                     dg.ItemsSource = this.vDs.Tables[Tabs].DefaultView;
                     dg.UpdateLayout();
                     dg.AutoGeneratingColumn += Dg_AutoGeneratingColumn;
+                    dg.CurrentCellChanged += Dg_CurrentCellChanged;
                     Menu mnu = new Menu();
+                    mnu.Name = "Menu_" + Tabs;
                     DockPanel dp = new DockPanel();
 
                     string toolbarfullstring = "";
@@ -156,21 +164,25 @@ namespace WpfClients
                                 mni.MinHeight = 20;
                                 mni.ToolTip = cur_butt_subs[2];
                                 mni.Margin = new Thickness(-5, 0, -5, 0);
-                                mni.Name = ("bttn_" + Tabs + "_"+cur_butt_subs[3]);
-                                mni.IsEnabled = cur_butt_subs[5] == "1"? true:false;
-                                mni.Visibility = cur_butt_subs[4] == "1"? Visibility.Visible:Visibility.Hidden;
+                                mni.Name = ("bttn_" + Tabs + "_" + cur_butt_subs[3]);
+                                mni.IsEnabled = cur_butt_subs[5] == "1" ? true : false;
+                                mni.Visibility = cur_butt_subs[4] == "1" ? Visibility.Visible : Visibility.Hidden;
                                 mni.Click += Mni_Click;
                                 try
                                 {
                                     ImageBrush imbr = new ImageBrush();
                                     imbr.ImageSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-               ((Bitmap)(Properties.Resources.ResourceManager.GetObject(cur_butt_subs[0].Replace("~","")))).GetHbitmap(),
+               ((Bitmap)(Properties.Resources.ResourceManager.GetObject(cur_butt_subs[0].Replace("~", "")))).GetHbitmap(),
                IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                                     mni.Background = imbr;
                                 }
                                 catch
                                 { }
-                                if (mni.Visibility == Visibility.Visible)mnu.Items.Add(mni);
+                                if (mni.Visibility == Visibility.Visible)
+                                {
+                                    mnu.Items.Add(mni);
+                                    this.ctrls_dic.Add(mni.Name, mni);
+                                }
 
                             }
                         }
@@ -182,16 +194,35 @@ namespace WpfClients
                     DockPanel.SetDock(mnu, Dock.Top);
                     DockPanel.SetDock(dg, Dock.Bottom);
                     dp.Children.Add(mnu);
+                    this.ctrls_dic.Add(mnu.Name, mnu);
                     dp.Children.Add(dg);
+                    this.ctrls_dic.Add(dg.Name, dg);
                     Ti.Content = dp;
                     //Ti.Content = dg;
                     string header;
                     this.settings_dict.TryGetValue(Ti.Name + ".Caption", out header);
                     Ti.Header = header;
                     this.mainTab.Items.Add(Ti);
+                    this.ctrls_dic.Add(Ti.Name, Ti);
                 }
             }
 
+        }
+
+        private void Dg_CurrentCellChanged(object sender, EventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            int currentRowIndex = dg.Items.IndexOf(dg.CurrentItem);
+            if (currentRowIndex == -1) currentRowIndex = 0;
+            for (int i = 0; i < dg.Items.Count; i++)
+            {
+                DataGridRow dgr = (DataGridRow)dg.ItemContainerGenerator.ContainerFromIndex(i);
+                if (dgr != null)
+                {
+                    if (i == currentRowIndex) dgr.Header = ">>";
+                    else dgr.Header = "";
+                }
+            }
         }
 
         private void Mni_Click(object sender, RoutedEventArgs e)
@@ -200,6 +231,41 @@ namespace WpfClients
             string bttn_name = some_bttn.Name;
             string Tabs = bttn_name.Split('_')[1];
             string action_str = bttn_name.Split('_')[2];
+
+            if (action_str == "ADD")
+            {
+                this.vDs.Tables[Tabs].Clear();
+                this.vConn.Open();
+                this.vQuery = "Select * from " + Tabs;
+                this.vAdap = new OleDbDataAdapter(this.vQuery, this.vConn);
+                this.vAdap.Fill(this.vDs, Tabs);
+                this.vConn.Close();
+            }
+
+            if (action_str == "EDIT")
+            {
+                string dgv_name = "datagrid_" + Tabs;
+                FrameworkElement tmp = null;
+                this.ctrls_dic.TryGetValue(dgv_name, out tmp);
+                DataGrid dg = tmp as DataGrid;
+                int currentRowIndex = dg.Items.IndexOf(dg.CurrentItem);
+                if (currentRowIndex == -1) currentRowIndex = 0;
+                AddEdit_window edit_wnd = new AddEdit_window(currentRowIndex,dg);
+                this.ctrls_dic.TryGetValue(Tabs, out tmp);
+                edit_wnd.Title = "Изменение в таблице \"" + (tmp as TabItem).Header+"\"";
+                edit_wnd.Show();
+                /*if ((bool)edit_wnd.ShowDialog())
+                {
+
+                }*/
+
+                this.vDs.Tables[Tabs].Clear();
+                this.vConn.Open();
+                this.vQuery = "Select * from " + Tabs;
+                this.vAdap = new OleDbDataAdapter(this.vQuery, this.vConn);
+                this.vAdap.Fill(this.vDs, Tabs);
+                this.vConn.Close();
+            }
 
             if (action_str == "REFRESH")
             {
@@ -251,6 +317,18 @@ namespace WpfClients
 
             dgc.Width = col_size;
             dgc.Header = header;
+        }
+
+        // выберем контрол по имени
+        public Control GetControlByName(string Name, ItemsControl ParentCtrl)
+        {
+            Control ret_val = null;
+            if ((ParentCtrl != null) && (ParentCtrl.Name == Name)) ret_val = ParentCtrl;
+            foreach (Control ctrl in ParentCtrl.Items)
+            {
+                if (ret_val == null) GetControlByName(Name, ctrl as ItemsControl);
+            }
+            return ret_val;
         }
     }
 }
